@@ -1,0 +1,7 @@
+1t - name
+2t - One time Description
+3t - Description going into the room
+4t - Direction of other rooms
+5t - Can start the game in the room
+6t - Can have first key
+7t - Can have second key

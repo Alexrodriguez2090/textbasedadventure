@@ -1,0 +1,14 @@
+Foyer	You can see the main entrance doors, but upon trying them, you notice they are locked.	You walk to the foyer.	You can see a room to the east, a room to the west, and stairs leading to the second floor.	true	canhavefirstkey	false	Foyer Balcony	null	Kitchen	Grand Hall
+Kitchen	Description	walkingto	Otherroom	false	canhavefirstkey	canhavesecondkey	Study	null	Foyer	null
+Grand Hall	Description	walkingto	Otherroom	true	canhavefirstkey	canhavesecondkey	Ballroom	null	null	Foyer
+Study	Description	walkingto	Otherroom	false	canhavefirstkey	canhavesecondkey	Backyard	null	Gallery	null
+Gallery	Description	walkingto	Otherroom	false	canhavefirstkey	canhavesecondkey	null	null	Ballroom	Study
+Ballroom	Description	walkingto	Otherroom	true	canhavefirstkey	canhavesecondkey	Bathroom	Grand Hall	null	Gallery
+Bathroom	Description	walkingto	Otherroom	false	true	canhavesecondkey	null	Ballroom	null	null
+Backyard	Description	walkingto	Otherroom	false	canhavefirstkey	canhavesecondkey	null	Study	null	null
+Foyer Balcony	Description	walkingto	You can see doors leading north, and the stairs to go back down on the south.	false	canhavefirstkey	false	Hallway	Foyer	null	null
+Hallway	Description	walkingto	Otherroom	false	canhavefirstkey	canhavesecondkey	null	Foyer Balcony	Main Bedroom	Small Bedroom
+Main Bedroom	Description	walkingto	Otherroom	false	canhavefirstkey	true	null	Bathroom	Hallway	null
+Small Bedroom	Description	walkingto	Otherroom	false	canhavefirstkey	canhavesecondkey	null	Closet	null	Hallway
+Closet	Description	walkingto	Otherroom	false	true	canhavesecondkey	Small Bedroom	null	null	null
+Bathroom	Description	You walk to the bathroom.	Otherroom	false	canhavefirstkey	canhavesecondkey	null	null	null	null
