@@ -1,0 +1,5 @@
+Gallery	adddescription	You feel like you are in the gallery.	noinfo	true	false	false	null	null	Ballroom	null
+Ballroom	adddescription	The empty space makes you feel like you are in the ballroom.	noinfo	false	false	false	locked	Grand Hall	null	noback
+Grand Hall	adddescription	You remember that south of the ballroom was the grand hall.	noinfo	false	false	false	noback	null	null	Foyer
+Foyer	adddescription	You can sense you are in the foyer, though the stairs seem to have crumbled.	noinfo	false	false	false	crumbled	Trueend	noback	locked
+Trueend	adddescription	You can't see anything.	noinfo	false	false	false	null	null	null	null

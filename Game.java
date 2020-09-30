@@ -151,7 +151,7 @@ public class Game {
             return activeRoom;
 
         } else if (newRoom.equals("Backyard")) {
-            //If they have both keys, else they do not
+            //*If* the player has both keys, *else* they do not
             if (items.get(0).equals("true") && items.get(1).equals("true")) {
                 ArrayList<String> roomToSend = new ArrayList<String>();
                 for (int i = 0; i < rooms.size(); i++) {
@@ -162,11 +162,55 @@ public class Game {
                 }
                 System.out.println(roomToSend.get(2));
                 return roomToSend;
-
             } else {
                 System.out.println("You cannot open the door, you need to fill both keyslots.");
                 return activeRoom;
             }
+
+        } else {
+            ArrayList<String> roomToSend = new ArrayList<String>();
+            for (int i = 0; i < rooms.size(); i++) {
+                if (rooms.get(i).get(0).equals(newRoom)) {
+                    roomToSend = rooms.get(i);
+                    break;
+                }
+            }
+            System.out.println(roomToSend.get(2));
+            return roomToSend;
+
+        }
+    }
+
+    public static ArrayList<String> partTwo(ArrayList<ArrayList<String>> rooms, ArrayList<String> activeRoom, String compass) {
+        int direction = 0;
+        switch (compass) {
+            case "n":
+                direction = 7;
+                break;
+            case "s":
+                direction = 8;
+                break;
+            case "e":
+                direction = 9;
+                break;
+            case "w":
+                direction = 10;
+                break;
+        }
+
+        String newRoom = activeRoom.get(direction);
+        if (newRoom.equals("null")) {
+            System.out.println("There is nothing in that direction.");
+            return activeRoom;
+        } else if (newRoom.equals("noback")) {
+            System.out.println("You try and go back to where you came from, but there is nothing there.");
+            return activeRoom;
+        } else if (newRoom.equals("locked")) {
+            System.out.println("You try and open the door, but it is locked.");
+            return activeRoom;
+        } else if (newRoom.equals("crumbled")) {
+            System.out.println("The stairs are crumbled.");
+            return activeRoom;
         } else {
             ArrayList<String> roomToSend = new ArrayList<String>();
             for (int i = 0; i < rooms.size(); i++) {
@@ -190,6 +234,7 @@ public class Game {
         System.out.println("The lights flicker, momentarily staying on at times.");
         System.out.printf("On the wall, you see the plaque 'Darkness Manor - %s'.\n", activeRoom.get(0));
         System.out.println("It seems you have woken up in a mansion.");
+        System.out.println();
     }
 
     /**
@@ -227,6 +272,9 @@ public class Game {
                     activeRoom = findRoom(rooms, activeRoom, input, items); //Check if room exists, and output to user the outcome
                     seenRooms = firstTimeRoom(seenRooms, activeRoom); //Check if this room has been seen before for description
                     items = roomCheck(activeRoom, importantRooms, items); //Check if room has keys
+                    if (activeRoom.get(0).equals("End")) {
+                        ingame = 2;
+                    }
                 } else if (input.equals("inspect")) {
                     System.out.println(activeRoom.get(1));
                 } else if (input.equals("items")) {
@@ -246,7 +294,37 @@ public class Game {
                 } else {
                     System.out.println("Command not found. Type 'help' for a explanation of commands.");
                 }
+        }
 
+        if (ingame == 2) {
+            rooms = Building.buildingMap2();
+            activeRoom = rooms.get(0);
+            System.out.println("You wake up, but all you see is darkness.");
+            System.out.println("Judging by all the glass on the ground, you feel you are in the gallery.");
+            System.out.println("You feel like you've been here before.");
+        }
+        while (ingame == 2) {
+            System.out.println(activeRoom.get(3));
+            System.out.println("What would you like to do?");
+            String input = sc.next();
+            System.out.println();
+                if (input.equals("n") || input.equals("s") || input.equals("e") || input.equals("w")) {
+                    activeRoom = partTwo(rooms, activeRoom, input);
+                    if (activeRoom.get(0).equals("Trueend")) {
+                        Spe.speech();
+                        return 0;
+                    }
+                } else if (input.equals("inspect")) {
+                    System.out.println("You can't see anything.");
+                } else if (input.equals("items")) {
+                    System.out.println("No items can help you now.");
+                } else if (input.equals("instructions") || input.equals("help")) {
+                    System.out.println("No one can help you now.");
+                } else if (input.equals("quit")) {
+                    System.out.println("No quitting now.");
+                } else {
+                    System.out.println("Command not found. Type 'help' for a explanation of commands.");
+                }
         }
         return 1;
     }
