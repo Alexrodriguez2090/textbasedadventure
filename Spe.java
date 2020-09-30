@@ -8,7 +8,7 @@ public class Spe {
             Thread.currentThread().interrupt();
         }
     }
-    public static int speech() {
+    public static void speech() {
         for (int i = 0; i < 40; i++) {
             System.out.println();
         }
@@ -17,10 +17,9 @@ public class Spe {
         sleep(2);
         System.out.println("THERE IS NO ESCAPE FROM THIS PLACE");
         sleep(2);
-        System.out.println("In fact, the only way you can get away from here.");
+        System.out.println("In fact, the only way you can get away from here...");
         sleep(2);
         System.out.println("Is if I closed your game.");
         sleep(2);
-        return 0;
     }
 }

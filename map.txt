@@ -12,4 +12,4 @@ Main Bedroom	A big bedroom, decorated in silks and gold. Unlike the rest of the 
 Small Bedroom	A small, normal looking bedroom. You would think being in a mansion, the rooms would be bigger, though it might just be a servant's bedroom.	You walk to the bedroom.	There is a closet to the south, and the hallway back west.	false	false	false	null	Closet	null	Hallway
 Closet	There is a chest with the number '1' imprinted on it.	You open the closet.	You can close the closet and go back north to the bedroom.	false	true	false	Small Bedroom	null	null	null
 Main Bathroom	An old, rundown bathroom. You cannot see very clearly here, and the ground under you feels wet, though none of the faucets work.	You walk to the bathroom.	You can return back to the main bedroom going north.	false	false	true	Main Bedroom	null	null	null
-End	As you run away, your eyes start to get heavy.	You are finally out of the mansion.	...	false	false	false	null	null	null	null
+End	As you run away, your eyes start to get heavy. Something comes over you, and you pass out...	You are finally out of the mansion.	...	false	false	false	null	null	null	null
