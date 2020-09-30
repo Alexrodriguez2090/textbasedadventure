@@ -18,9 +18,7 @@ public class Building {
             while (line != null) {
                 String room[] = line.split("\t");
                 ArrayList<String> roomToAppend = new ArrayList<String>(Arrays.asList(room));
-                //roomToAppend.add(Arrays.asList(room));
                 rooms.add(roomToAppend);
-                System.out.println(line);
                 line = reader.readLine();
             }
         } catch (IOException e) {

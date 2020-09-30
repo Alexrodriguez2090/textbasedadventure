@@ -11,7 +11,6 @@ public class Game {
         System.out.println("2. Quit");
 
         int input = sc.nextInt();
-        System.out.println(input);
         if (input == 1) {
             return 2;
         } else if (input == 2) {
@@ -42,7 +41,7 @@ public class Game {
         String nameOfFirstKeyRoom = roomsWithFirstKey.get(rndRoomForFirstKey);
 
         int rndRoomForSecondKey = rnd.nextInt(roomsWithSecondKey.size());
-        String nameOfSecondKeyRoom = roomsWithSecondKey.get(rndRoomForFirstKey);
+        String nameOfSecondKeyRoom = roomsWithSecondKey.get(rndRoomForSecondKey);
 
         ArrayList<String> importantRooms = new ArrayList<String>();
         importantRooms.add(nameOfFirstKeyRoom);
@@ -50,13 +49,29 @@ public class Game {
         return importantRooms;
     }
 
-    //public static ArrayList<String> roomCheck(ArrayList<ArrayList<String>> rooms) {
-    //    return 0;
-    //}
+    public static ArrayList<String> roomCheck(ArrayList<String> activeRoom, ArrayList<String> importantRooms, ArrayList<String> items) {
+        //Checks if the room we just went into has the first key
+        if (activeRoom.get(0).equals(importantRooms.get(0))) {
+            items.set(0, "true");
+            System.out.println("You see a chest labeled '1', with a key inside. This chest does not look old, like everything else, so you decide to take the key.");
+            return items;
+        }
+        //Checks if the room we just went into has the second key
+        if (activeRoom.get(0).equals(importantRooms.get(1))) {
+            items.set(1, "true");
+            System.out.println("You see a chest labeled '2' in sink. You do not feel as if this chest fits with the decor here. You take the key.");
+            return items;
+        }
+        return items;
+    }
 
+    /**
+    * Sets up the room for the player to spawn in.
+    * @param rooms - Takes in all the rooms to check which the user can spawn in
+    * @return - Returns the room the user has spawned in
+    */
     public static ArrayList<String> setUpStart(ArrayList<ArrayList<String>> rooms) {
         Random rnd = new Random();
-        System.out.println(rooms.size());
 
         ArrayList<String> startingRooms = new ArrayList<String>();
         for (int i = 0; i < rooms.size(); i++) {
@@ -64,7 +79,6 @@ public class Game {
                 startingRooms.add(rooms.get(i).get(0));
             }
         }
-        System.out.println(startingRooms.size());
         int rndRoomToStart = rnd.nextInt(startingRooms.size());
         String nameOfRoom = startingRooms.get(rndRoomToStart);
 
@@ -78,16 +92,43 @@ public class Game {
         return myRoom;
     }
 
+    /**
+    * Prints the instructions out to the user whenever called.
+    */
     public static void instructions() {
         System.out.println("1. Move by simply typing the first letter of north, south, east, or west.");
         System.out.println("n, s, e, w");
         System.out.println("2. You will inspect a room the first time you enter, and you can review your inspection again by typing 'inspect'.");
-        System.out.println("3. If you need to see these instructions again, simply type 'instructions' or 'help'.");
-        System.out.println("4. You can quit at any time by typing 'quit', although your progress will not save.");
-        System.out.println("5. Have fun!");
+        System.out.println("3. You can view your items by typing 'items'.");
+        System.out.println("4. If you need to see these instructions again, simply type 'instructions' or 'help'.");
+        System.out.println("5. You can quit at any time by typing 'quit', although your progress will not save.");
+        System.out.println("6. Have fun!");
     }
 
-    public static ArrayList<String> findRoom(ArrayList<ArrayList<String>> rooms, ArrayList<String> activeRoom, String compass) {
+    /**
+    * Checks if the user has been in this room before, since the first time going into the room triggers its description.
+    * @param seenRooms -
+    * @param activeRoom -
+    * @return - Returns the list of seen rooms, whether it has changed with this new room or not.
+    */
+    public static ArrayList<String> firstTimeRoom(ArrayList<String> seenRooms, ArrayList<String> activeRoom) {
+        if (seenRooms.contains(activeRoom.get(0))) {
+            return seenRooms;
+        } else {
+            seenRooms.add(activeRoom.get(0));
+            System.out.println(activeRoom.get(1));
+        }
+        return seenRooms;
+    }
+
+    /**
+    * Checks whichever direction the user has input for a room.
+    * @param rooms -
+    * @param activeRoom -
+    * @param compass - The direction the user input
+    * @return - Returns either the new room the user has went into, or the same room if the user walked into a wall
+    */
+    public static ArrayList<String> findRoom(ArrayList<ArrayList<String>> rooms, ArrayList<String> activeRoom, String compass, ArrayList<String> items) {
         int direction = 0;
         switch (compass) {
             case "n":
@@ -105,36 +146,99 @@ public class Game {
         }
 
         String newRoom = activeRoom.get(direction);
+        if (newRoom.equals("null")) {
+            System.out.println("There is nothing in that direction.");
+            return activeRoom;
 
-        ArrayList<String> roomToSend = new ArrayList<String>();
-        for (int i = 0; i < rooms.size(); i++) {
-            if (rooms.get(i).get(0).equals(newRoom)) {
-                roomToSend = rooms.get(i);
-                break;
+        } else if (newRoom.equals("Backyard")) {
+            //If they have both keys, else they do not
+            if (items.get(0).equals("true") && items.get(1).equals("true")) {
+                ArrayList<String> roomToSend = new ArrayList<String>();
+                for (int i = 0; i < rooms.size(); i++) {
+                    if (rooms.get(i).get(0).equals(newRoom)) {
+                        roomToSend = rooms.get(i);
+                        break;
+                    }
+                }
+                System.out.println(roomToSend.get(2));
+                return roomToSend;
+
+            } else {
+                System.out.println("You cannot open the door, you need to fill both keyslots.");
+                return activeRoom;
             }
+        } else {
+            ArrayList<String> roomToSend = new ArrayList<String>();
+            for (int i = 0; i < rooms.size(); i++) {
+                if (rooms.get(i).get(0).equals(newRoom)) {
+                    roomToSend = rooms.get(i);
+                    break;
+                }
+            }
+            System.out.println(roomToSend.get(2));
+            return roomToSend;
+
         }
-        return roomToSend;
     }
 
+    /**
+    *Prints the wake up room for the user
+    */
+    public static void wakeUp(ArrayList<String>activeRoom) {
+        System.out.println("You wake up, but all you see is darkness.");
+        System.out.println("You don't know where you are, all you remember was being home.");
+        System.out.println("The lights flicker, momentarily staying on at times.");
+        System.out.printf("On the wall, you see the plaque 'Darkness Manor - %s'.\n", activeRoom.get(0));
+        System.out.println("It seems you have woken up in a mansion.");
+    }
 
+    /**
+    * This function runs the game, everything that will happen ingame has to come from here.
+    * @param sc - Scanner from the main
+    * @param rooms - ArrayList of all rooms in the game
+    * @return The return is only for when the user quits, which takes them back to menu, or for when the game is finished.
+    */
     public static int ingame(Scanner sc, ArrayList<ArrayList<String>> rooms) {
+        //Initializing the active room, rooms with keys, and rooms the player has seen
         ArrayList<String> activeRoom = new ArrayList<String>();
         ArrayList<String> importantRooms = new ArrayList<String>();
-
+        ArrayList<String> seenRooms = new ArrayList<String>();
+        seenRooms.add("default");
         activeRoom = setUpStart(rooms);
         importantRooms = importantRooms(rooms);
+        System.out.println(importantRooms);
 
-        System.out.println("You open your eyes and ");
+        //Starting up the items variable. The only 2 items are keys, and they are ordered by their position on the list. [key1, key2]
+        ArrayList<String> items = new ArrayList<String>();
+        items.add("false");
+        items.add("false");
+
+        instructions();
+        System.out.println();
+        wakeUp(activeRoom);
 
         int ingame = 1;
         while (ingame == 1) {
+            System.out.println(activeRoom.get(3));
             System.out.println("What would you like to do?");
-            String input = sc.nextLine();
-            System.out.println(input);
+            String input = sc.next();
+            System.out.println();
                 if (input.equals("n") || input.equals("s") || input.equals("e") || input.equals("w")) {
-                    findRoom(rooms, activeRoom, input);
+                    activeRoom = findRoom(rooms, activeRoom, input, items); //Check if room exists, and output to user the outcome
+                    seenRooms = firstTimeRoom(seenRooms, activeRoom); //Check if this room has been seen before for description
+                    items = roomCheck(activeRoom, importantRooms, items); //Check if room has keys
                 } else if (input.equals("inspect")) {
-
+                    System.out.println(activeRoom.get(1));
+                } else if (input.equals("items")) {
+                    if (items.get(0).equals("true") && items.get(1).equals("true")) {
+                        System.out.println("You have both keys.");
+                    } else if (items.get(0).equals("true") && items.get(1).equals("false")) {
+                        System.out.println("You have a key labeled '1'.");
+                    } else if (items.get(0).equals("false") && items.get(1).equals("true")) {
+                        System.out.println("You have a key labeled '2'.");
+                    } else {
+                        System.out.println("You have no keys.");
+                    }
                 } else if (input.equals("instructions") || input.equals("help")) {
                     instructions();
                 } else if (input.equals("quit")) {
@@ -151,7 +255,6 @@ public class Game {
         Scanner sc = new Scanner(System.in);
         ArrayList<ArrayList<String>> rooms = new ArrayList<ArrayList<String>>();
         rooms = Building.buildingMap();
-        System.out.println(rooms);
 
         int mode = 1;
         while (mode != 0) {
