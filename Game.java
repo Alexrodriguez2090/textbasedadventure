@@ -9,7 +9,7 @@ public class Game {
     * @param sc - Takes in the scanner from the main
     */
     public static int mainMenu(Scanner sc) {
-        System.out.println("  The Mansion: Prologue");
+        System.out.println("  Darkness Manor: Prologue");
         System.out.println("-------------------------");
         System.out.println("     1. Start Game");
         System.out.println("     2. Quit");

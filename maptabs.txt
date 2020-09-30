@@ -5,3 +5,7 @@
 5t - Can start the game in the room
 6t - Can have first key
 7t - Can have second key
+8t - north
+9t - north
+10t - north
+11t - north

@@ -64,7 +64,7 @@ public class Character{
                 direction = 10;
                 break;
         }
-        
+
         String newRoom = activeRoom.get(direction);
         return newRoom;
     }
