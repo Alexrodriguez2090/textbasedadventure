@@ -1,3 +1,3 @@
 # textbasedadventure
 
-Compile and run "Game"
+Compile, and run "Game"
